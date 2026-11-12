@@ -1,0 +1,67 @@
+
+interface Chargeable {
+    double chargingFee(int units);
+
+    default void chargingMessage() {
+        System.out.println("Vehicle can be charged");
+    }
+
+    static void showMessage() {
+        System.out.println("Charging facility available");
+    }
+}
+
+abstract class Vehicle {
+    String regNo;
+
+    Vehicle(String regNo) {
+        this.regNo = regNo;
+    }
+
+    abstract double calculateFee(int hours);
+
+    void display() {
+        System.out.println("Vehicle: " + regNo);
+    }
+}
+
+class Car extends Vehicle {
+    Car(String regNo) {
+        super(regNo);
+    }
+
+    double calculateFee(int hours) {
+        return hours * 30;
+    }
+}
+
+class ElectricCar extends Vehicle implements Chargeable {
+    ElectricCar(String regNo) {
+        super(regNo);
+    }
+
+    double calculateFee(int hours) {
+        return hours * 30;
+    }
+
+    public double chargingFee(int units) {
+        return units * 12;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car c = new Car("AP01AB1234");
+        ElectricCar e = new ElectricCar("AP02EV5678");
+
+        c.display();
+        System.out.println("Car Fee: " + c.calculateFee(2));
+
+        e.display();
+        System.out.println("EV Fee: " + e.calculateFee(2));
+        System.out.println("Charging Fee: " + e.chargingFee(5));
+
+        e.chargingMessage();
+        Chargeable.showMessage();
+    }
+}
