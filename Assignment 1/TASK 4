@@ -1,0 +1,46 @@
+class ParkingTicket {
+
+    private static int counter = 1000;
+
+    int ticketNo;
+    String vehicleNo;
+    int floor;
+    int slot;
+
+    ParkingTicket() {
+        this("UNKNOWN", 0, 0);
+    }
+
+    ParkingTicket(String vehicleNo, int floor, int slot) {
+        this.ticketNo = ++counter;
+        this.vehicleNo = vehicleNo;
+        this.floor = floor;
+        this.slot = slot;
+    }
+
+    ParkingTicket(ParkingTicket oldTicket) {
+        this(oldTicket.vehicleNo, oldTicket.floor, oldTicket.slot);
+    }
+
+    void display() {
+        System.out.println("Ticket Number: " + ticketNo);
+        System.out.println("Vehicle Number: " + vehicleNo);
+        System.out.println("Floor: " + floor);
+        System.out.println("Slot: " + slot);
+    }
+}
+
+public class Task04 {
+    public static void main(String[] args) {
+
+        ParkingTicket t1 =
+            new ParkingTicket("AP01AB1234", 1, 10);
+
+        ParkingTicket t2 = new ParkingTicket(t1);
+
+        t1.display();
+
+        System.out.println("Duplicate Ticket:");
+        t2.display();
+    }
+}
