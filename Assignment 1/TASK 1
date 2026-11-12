@@ -1,0 +1,57 @@
+
+class Vehicle {
+    String regNo;
+    String type;
+    long entryTime;
+
+    Vehicle(String regNo, String type, long entryTime) {
+        this.regNo = regNo;
+        this.type = type;
+        this.entryTime = entryTime;
+    }
+
+    void display() {
+        System.out.println("Vehicle Number: " + regNo);
+        System.out.println("Vehicle Type: " + type);
+        System.out.println("Entry Time: " + entryTime);
+    }
+}
+
+class ParkingSlot {
+    int floor;
+    int slotNo;
+    Vehicle vehicle;
+
+    ParkingSlot(int floor, int slotNo) {
+        this.floor = floor;
+        this.slotNo = slotNo;
+    }
+
+    void parkVehicle(Vehicle v) {
+        if (vehicle == null) {
+            vehicle = v;
+            System.out.println("Vehicle Parked Successfully");
+        } else {
+            System.out.println("Slot Already Occupied");
+        }
+    }
+
+    void releaseSlot() {
+        vehicle = null;
+        System.out.println("Slot Released");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Vehicle v = new Vehicle(
+            "AP01AB1234", "Car", System.currentTimeMillis()
+        );
+
+        ParkingSlot p = new ParkingSlot(1, 10);
+
+        p.parkVehicle(v);
+        v.display();
+        p.releaseSlot();
+    }
+}
