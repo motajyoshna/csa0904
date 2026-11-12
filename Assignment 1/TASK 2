@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+public class Task02 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int floors = 2;
+
+        int[] slotsPerFloor = {3, 2};
+
+        String[][] slots = new String[floors][];
+
+        for (int i = 0; i < floors; i++) {
+            slots[i] = new String[slotsPerFloor[i]];
+        }
+
+        System.out.print("Enter vehicle number: ");
+        String vehicleNo = sc.nextLine();
+
+        slots[0][0] = vehicleNo;
+
+        int slotNumber = 10;
+        long entryTime = System.currentTimeMillis();
+        int durationMinutes = 90;
+
+        double hours = Math.ceil(durationMinutes / 60.0);
+        double fee = hours * 30.0;
+
+        System.out.println("Vehicle Number: " + slots[0][0]);
+        System.out.println("Slot Number: " + slotNumber);
+        System.out.println("Entry Time: " + entryTime);
+        System.out.println("Duration: " + durationMinutes);
+        System.out.println("Parking Fee: Rs " + fee);
+
+        sc.close();
+    }
+}
