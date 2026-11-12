@@ -1,0 +1,138 @@
+
+import java.util.HashMap;
+
+abstract class Vehicle {
+    String regNo;
+
+    Vehicle(String regNo) {
+        this.regNo = regNo;
+    }
+
+    abstract double calculateFee(int minutes);
+}
+
+class Car extends Vehicle {
+    Car(String regNo) {
+        super(regNo);
+    }
+
+    double calculateFee(int minutes) {
+        return ((minutes + 59) / 60) * 30.0;
+    }
+}
+
+class Bike extends Vehicle {
+    Bike(String regNo) {
+        super(regNo);
+    }
+
+    double calculateFee(int minutes) {
+        return ((minutes + 59) / 60) * 10.0;
+    }
+}
+
+class EV extends Vehicle {
+    EV(String regNo) {
+        super(regNo);
+    }
+
+    double calculateFee(int minutes) {
+        return ((minutes + 59) / 60) * 30.0;
+    }
+}
+
+class ParkingTicket {
+    int ticketNo;
+    Vehicle vehicle;
+    int floor;
+    int slot;
+
+    ParkingTicket(int ticketNo, Vehicle vehicle,
+                  int floor, int slot) {
+        this.ticketNo = ticketNo;
+        this.vehicle = vehicle;
+        this.floor = floor;
+        this.slot = slot;
+    }
+}
+
+class ParkingSystem {
+    boolean[][] slots = new boolean[2][2];
+    HashMap<String, ParkingTicket> activeTickets =
+        new HashMap<String, ParkingTicket>();
+
+    int ticketCounter = 0;
+
+    ParkingTicket park(Vehicle vehicle) {
+        if (activeTickets.containsKey(vehicle.regNo)) {
+            System.out.println("Duplicate Registration");
+            return null;
+        }
+
+        for (int f = 0; f < slots.length; f++) {
+            for (int s = 0; s < slots[f].length; s++) {
+                if (!slots[f][s]) {
+                    slots[f][s] = true;
+
+                    ParkingTicket ticket =
+                        new ParkingTicket(++ticketCounter,
+                                          vehicle, f, s);
+
+                    activeTickets.put(vehicle.regNo, ticket);
+
+                    System.out.println(vehicle.regNo +
+                        " parked at Floor " + f +
+                        ", Slot " + s);
+
+                    return ticket;
+                }
+            }
+        }
+
+        System.out.println("Parking Full");
+        return null;
+    }
+
+    double exit(String regNo, int minutes) {
+        ParkingTicket ticket = activeTickets.get(regNo);
+
+        if (ticket == null) {
+            System.out.println("Vehicle Not Found");
+            return -1;
+        }
+
+        double fee = ticket.vehicle.calculateFee(minutes);
+
+        slots[ticket.floor][ticket.slot] = false;
+        activeTickets.remove(regNo);
+
+        System.out.println("Ticket Number: " + ticket.ticketNo);
+        System.out.println("Vehicle: " + regNo);
+        System.out.println("Parking Fee: Rs " + fee);
+
+        return fee;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ParkingSystem system = new ParkingSystem();
+
+        system.park(new Car("AP01AB1234"));
+        system.park(new Bike("AP02CD5678"));
+        system.park(new EV("AP03EF9012"));
+
+        system.park(new Car("AP01AB1234"));
+
+        System.out.println("\nVehicle Exit:");
+
+        system.exit("AP01AB1234", 120);
+        system.exit("AP02CD5678", 60);
+
+        System.out.println("\nRemaining Vehicles: " +
+                           system.activeTickets.size());
+
+        System.out.println("Invalid Slot Test: " +
+                           system.slots[0][0]);
+    }
+}
