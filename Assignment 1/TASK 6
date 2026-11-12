@@ -1,0 +1,48 @@
+
+class Vehicle {
+    String regNo;
+
+    Vehicle(String regNo) {
+        this.regNo = regNo;
+        System.out.println("Vehicle Constructor");
+    }
+
+    void display() {
+        System.out.println("Registration: " + regNo);
+    }
+}
+
+class Car extends Vehicle {
+    Car(String regNo) {
+        super(regNo);
+        System.out.println("Car Constructor");
+    }
+}
+
+class ElectricCar extends Car {
+    ElectricCar(String regNo) {
+        super(regNo);
+        System.out.println("ElectricCar Constructor");
+    }
+}
+
+class TwoWheeler extends Vehicle {
+    TwoWheeler(String regNo) {
+        super(regNo);
+        System.out.println("TwoWheeler Constructor");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Creating Electric Car:");
+        ElectricCar e = new ElectricCar("AP01EV1234");
+        e.display();
+
+        System.out.println();
+
+        System.out.println("Creating Two Wheeler:");
+        TwoWheeler t = new TwoWheeler("AP02TW5678");
+        t.display();
+    }
+}
