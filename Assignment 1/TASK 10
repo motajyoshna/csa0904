@@ -1,0 +1,69 @@
+
+class Vehicle {
+    private String regNo;
+    private int slotNo;
+
+    public Vehicle(String regNo, int slotNo) {
+        setRegNo(regNo);
+        setSlotNo(slotNo);
+    }
+
+    public void setRegNo(String regNo) {
+        if (regNo == null || regNo.isEmpty()) {
+            throw new IllegalArgumentException("Invalid vehicle number");
+        }
+        this.regNo = regNo;
+    }
+
+    public void setSlotNo(int slotNo) {
+        if (slotNo <= 0) {
+            throw new IllegalArgumentException("Invalid slot number");
+        }
+        this.slotNo = slotNo;
+    }
+
+    public String getRegNo() {
+        return regNo;
+    }
+
+    public int getSlotNo() {
+        return slotNo;
+    }
+}
+
+class ParkingTicket {
+    private int ticketNo;
+    private Vehicle vehicle;
+
+    public ParkingTicket(int ticketNo, Vehicle vehicle) {
+        if (ticketNo <= 0 || vehicle == null) {
+            throw new IllegalArgumentException("Invalid ticket details");
+        }
+        this.ticketNo = ticketNo;
+        this.vehicle = vehicle;
+    }
+
+    public int getTicketNo() {
+        return ticketNo;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Vehicle v = new Vehicle("AP01AB1234", 10);
+        ParkingTicket t = new ParkingTicket(101, v);
+
+        System.out.println("Ticket Number: " + t.getTicketNo());
+        System.out.println("Vehicle Number: " +
+                           t.getVehicle().getRegNo());
+        System.out.println("Slot Number: " +
+                           t.getVehicle().getSlotNo());
+
+        v.setSlotNo(15);
+        System.out.println("Updated Slot: " + v.getSlotNo());
+    }
+}
