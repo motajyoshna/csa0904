@@ -1,0 +1,49 @@
+
+import java.util.*;
+
+public class Task04 {
+
+    public static void main(String[] args) {
+
+        HashMap<String, Integer> hashMap = new HashMap<>();
+
+        TreeMap<String, Integer> treeMap = new TreeMap<>();
+
+        LinkedHashMap<String, Integer> linkedMap =
+                new LinkedHashMap<>();
+
+        hashMap.put("MED103", 50);
+        hashMap.put("MED101", 100);
+        hashMap.put("MED104", 25);
+        hashMap.put("MED102", 75);
+
+        treeMap.putAll(hashMap);
+        linkedMap.put("MED103", 50);
+        linkedMap.put("MED101", 100);
+        linkedMap.put("MED104", 25);
+        linkedMap.put("MED102", 75);
+
+        System.out.println("HashMap:");
+        System.out.println(hashMap);
+
+        System.out.println("TreeMap - Code Order:");
+        System.out.println(treeMap);
+
+        System.out.println("LinkedHashMap - Insertion Order:");
+        System.out.println(linkedMap);
+
+        System.out.println("Stock of MED102: "
+                + hashMap.get("MED102"));
+
+        long start = System.nanoTime();
+
+        for (int i = 0; i < 100000; i++) {
+            hashMap.get("MED102");
+        }
+
+        long end = System.nanoTime();
+
+        System.out.println("100000 Lookups Time: "
+                + (end - start) + " ns");
+    }
+}
