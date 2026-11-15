@@ -1,0 +1,62 @@
+
+import java.io.*;
+
+public class BufferedCounter {
+
+    static String data =
+            "Arun\nDivya\nJoshna\nRahul\nPriya\n";
+
+    static long unbufferedCount() throws IOException {
+        long count = 0;
+
+        ByteArrayInputStream in =
+                new ByteArrayInputStream(data.getBytes());
+
+        int ch;
+
+        while ((ch = in.read()) != -1) {
+            if (ch == '\n') {
+                count++;
+            }
+        }
+
+        in.close();
+        return count;
+    }
+
+    static long bufferedCount() throws IOException {
+        long count = 0;
+
+        BufferedReader br = new BufferedReader(
+                new StringReader(data));
+
+        while (br.readLine() != null) {
+            count++;
+        }
+
+        br.close();
+        return count;
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        long start = System.nanoTime();
+        long a = unbufferedCount();
+        long t1 = System.nanoTime() - start;
+
+        start = System.nanoTime();
+        long b = bufferedCount();
+        long t2 = System.nanoTime() - start;
+
+        System.out.println("Unbuffered Lines: " + a);
+        System.out.println("Buffered Lines: " + b);
+
+        System.out.println("Unbuffered Time: " +
+                t1 / 1e6 + " ms");
+
+        System.out.println("Buffered Time: " +
+                t2 / 1e6 + " ms");
+
+        System.out.println("Program Executed Successfully");
+    }
+}
