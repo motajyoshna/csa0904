@@ -1,0 +1,59 @@
+
+import java.util.*;
+
+public class Task07 {
+
+    public static void main(String[] args) {
+
+        int n = 10000;
+
+        String[] medicines = new String[n];
+
+        HashMap<String, Integer> stock = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+
+            medicines[i] = "MED" + i;
+
+            stock.put(medicines[i], i + 10);
+        }
+
+        String search = "MED9999";
+
+        // Original Linear Search
+
+        long start = System.nanoTime();
+
+        int result = -1;
+
+        for (int i = 0; i < n; i++) {
+
+            if (medicines[i].equals(search)) {
+                result = i;
+                break;
+            }
+        }
+
+        long linearTime = System.nanoTime() - start;
+
+        // Redesigned HashMap Search
+
+        start = System.nanoTime();
+
+        Integer value = stock.get(search);
+
+        long mapTime = System.nanoTime() - start;
+
+        System.out.println("Linear Search Result: " + result);
+
+        System.out.println("HashMap Stock: " + value);
+
+        System.out.println("Linear Search Time: "
+                + linearTime + " ns");
+
+        System.out.println("HashMap Search Time: "
+                + mapTime + " ns");
+
+        System.out.println("Redesign completed successfully.");
+    }
+}
