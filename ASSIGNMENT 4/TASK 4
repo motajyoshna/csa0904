@@ -1,0 +1,46 @@
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("===== DRAW PAD =====");
+        System.out.println("1. Mouse Click");
+        System.out.println("2. Mouse Press");
+        System.out.println("3. Mouse Release");
+        System.out.println("4. Mouse Enter");
+        System.out.println("5. Mouse Exit");
+
+        System.out.print("Select Mouse Event: ");
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.println("Mouse Click Event Detected");
+                break;
+
+            case 2:
+                System.out.println("Mouse Press Event Detected");
+                break;
+
+            case 3:
+                System.out.println("Mouse Release Event Detected");
+                break;
+
+            case 4:
+                System.out.println("Mouse Enter Event Detected");
+                break;
+
+            case 5:
+                System.out.println("Mouse Exit Event Detected");
+                break;
+
+            default:
+                System.out.println("Invalid Choice");
+        }
+
+        sc.close();
+    }
+}
