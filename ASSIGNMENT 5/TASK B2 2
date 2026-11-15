@@ -1,0 +1,52 @@
+
+import java.io.*;
+
+public class DamagedPassTest {
+
+    public static void main(String[] args) throws IOException {
+
+        String file = "damaged.txt";
+
+        try (BufferedWriter bw = new BufferedWriter(
+                new FileWriter(file))) {
+
+            bw.write("P1001,192311001,Arun,12,3500");
+            bw.newLine();
+
+            bw.write("P1002,DAMAGED");
+            bw.newLine();
+
+            bw.write("P1003,192311003,Divya,7,ABC");
+            bw.newLine();
+
+            bw.newLine();
+        }
+
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(file))) {
+
+            String line;
+            int row = 0;
+
+            while ((line = br.readLine()) != null) {
+                row++;
+
+                String[] data = line.split(",", -1);
+
+                try {
+                    if (data.length != 5)
+                        throw new Exception("Wrong number of fields");
+
+                    Integer.parseInt(data[3]);
+                    Double.parseDouble(data[4]);
+
+                    System.out.println("Valid Record: " + line);
+
+                } catch (Exception e) {
+                    System.out.println("Invalid Row " + row +
+                            ": " + e.getMessage());
+                }
+            }
+        }
+    }
+}
