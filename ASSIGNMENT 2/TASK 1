@@ -1,0 +1,39 @@
+
+public class Task01 {
+
+    public static void main(String[] args) {
+
+        int fields = 50;
+
+        // Using String
+        long start = System.nanoTime();
+        String s = "";
+        for (int i = 1; i <= fields; i++) {
+            s += "Field" + i + " : Value ";
+        }
+        long stringTime = System.nanoTime() - start;
+
+        // Using StringBuilder
+        start = System.nanoTime();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= fields; i++) {
+            sb.append("Field").append(i).append(" : Value ");
+        }
+        long builderTime = System.nanoTime() - start;
+
+        // Using StringBuffer
+        start = System.nanoTime();
+        StringBuffer sf = new StringBuffer();
+        for (int i = 1; i <= fields; i++) {
+            sf.append("Field").append(i).append(" : Value ");
+        }
+        long bufferTime = System.nanoTime() - start;
+
+        System.out.println("String Time: " + stringTime);
+        System.out.println("StringBuilder Time: " + builderTime);
+        System.out.println("StringBuffer Time: " + bufferTime);
+
+        System.out.println("\nTicket:");
+        System.out.println(sb);
+    }
+}
