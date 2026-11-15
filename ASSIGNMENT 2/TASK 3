@@ -1,0 +1,55 @@
+
+import java.util.*;
+
+class Student {
+
+    String regNo;
+    String name;
+
+    Student(String regNo, String name) {
+        this.regNo = regNo;
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o)
+            return true;
+
+        if (!(o instanceof Student))
+            return false;
+
+        Student s = (Student) o;
+
+        return regNo.equals(s.regNo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(regNo);
+    }
+
+    @Override
+    public String toString() {
+        return regNo + " " + name;
+    }
+}
+
+public class Task03 {
+
+    public static void main(String[] args) {
+
+        Set<Student> students = new HashSet<>();
+
+        students.add(new Student("192311001", "Arun"));
+        students.add(new Student("192311002", "Divya"));
+        students.add(new Student("192311001", "Arun"));
+
+        System.out.println("Unique Students: " + students.size());
+
+        for (Student s : students) {
+            System.out.println(s);
+        }
+    }
+}
