@@ -1,0 +1,54 @@
+class Wallet {
+    int balance;
+
+    Wallet(int balance) {
+        this.balance = balance;
+    }
+}
+
+public class Main {
+
+    static void transfer(Wallet a, Wallet b, int amount) {
+
+        Wallet first = a;
+        Wallet second = b;
+
+        if (System.identityHashCode(first) >
+            System.identityHashCode(second)) {
+            first = b;
+            second = a;
+        }
+
+        synchronized (first) {
+            synchronized (second) {
+                if (a.balance >= amount) {
+                    a.balance -= amount;
+                    b.balance += amount;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args)
+            throws InterruptedException {
+
+        Wallet w1 = new Wallet(1000);
+        Wallet w2 = new Wallet(1000);
+
+        Thread t1 = new Thread(() ->
+            transfer(w1, w2, 200));
+
+        Thread t2 = new Thread(() ->
+            transfer(w2, w1, 100));
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println("Wallet 1 balance: " + w1.balance);
+        System.out.println("Wallet 2 balance: " + w2.balance);
+        System.out.println("Transfers completed");
+    }
+}
