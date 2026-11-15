@@ -1,0 +1,51 @@
+
+import java.util.*;
+
+public class PassLoader {
+
+    public static int loadAll(List<String[]> passes) {
+
+        List<String[]> database = new ArrayList<>();
+
+        try {
+            for (String[] p : passes) {
+
+                if (p.length != 5) {
+                    throw new IllegalArgumentException("Invalid record");
+                }
+
+                Integer.parseInt(p[3]);
+                Double.parseDouble(p[4]);
+
+                database.add(p);
+            }
+
+            return database.size();
+
+        } catch (Exception e) {
+            database.clear();
+            System.out.println("Error: " + e.getMessage());
+            return 0;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        List<String[]> passes = new ArrayList<>();
+
+        for (int i = 1; i <= 10; i++) {
+            passes.add(new String[]{
+                "P" + i,
+                "19231" + i,
+                "Student" + i,
+                "7",
+                "3500"
+            });
+        }
+
+        int count = loadAll(passes);
+
+        System.out.println("Total Records Inserted: " + count);
+        System.out.println("Program Executed Successfully");
+    }
+}
