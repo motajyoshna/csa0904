@@ -1,0 +1,112 @@
+
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<String> books = new ArrayList<>();
+
+        books.add("Java Programming");
+        books.add("Database System");
+        books.add("Computer Networking");
+        books.add("Advanced Java");
+        books.add("SQL Database");
+
+        int choice;
+
+        do {
+            System.out.println("\n===== CAMPUS LIBRARY =====");
+            System.out.println("1. Search Book");
+            System.out.println("2. Select Category");
+            System.out.println("3. Previous Page");
+            System.out.println("4. Next Page");
+            System.out.println("5. Reserve Book");
+            System.out.println("6. View All Books");
+            System.out.println("7. Exit");
+
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter book name: ");
+                    String search = sc.nextLine();
+
+                    boolean found = false;
+
+                    for (String book : books) {
+                        if (book.toLowerCase().contains(search.toLowerCase())) {
+                            System.out.println("Found: " + book);
+                            found = true;
+                        }
+                    }
+
+                    if (!found) {
+                        System.out.println("Book Not Found");
+                    }
+                    break;
+
+                case 2:
+                    System.out.println("Select Category:");
+                    System.out.println("1. Java");
+                    System.out.println("2. Database");
+                    System.out.println("3. Networking");
+
+                    int category = sc.nextInt();
+
+                    if (category == 1)
+                        System.out.println("Java Books Selected");
+                    else if (category == 2)
+                        System.out.println("Database Books Selected");
+                    else if (category == 3)
+                        System.out.println("Networking Books Selected");
+                    else
+                        System.out.println("Invalid Category");
+                    break;
+
+                case 3:
+                    System.out.println("Previous Page");
+                    break;
+
+                case 4:
+                    System.out.println("Next Page");
+                    break;
+
+                case 5:
+                    System.out.print("Enter book name to reserve: ");
+                    String reserve = sc.nextLine();
+
+                    if (books.contains(reserve)) {
+                        System.out.println("Book Reserved Successfully!");
+                    } else {
+                        System.out.println("Book Not Available");
+                    }
+                    break;
+
+                case 6:
+                    System.out.println("\nAvailable Books:");
+
+                    for (String book : books) {
+                        System.out.println(book);
+                    }
+                    break;
+
+                case 7:
+                    System.out.println("Thank You!");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice");
+            }
+
+        } while (choice != 7);
+
+        sc.close();
+    }
+}
