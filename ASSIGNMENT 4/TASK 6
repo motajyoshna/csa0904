@@ -1,0 +1,92 @@
+
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<String> registrations = new ArrayList<>();
+
+        int choice;
+
+        do {
+            System.out.println("\n===== CAMPUS EVENT REGISTRATION =====");
+            System.out.println("1. Register Student");
+            System.out.println("2. View Registrations");
+            System.out.println("3. Search Student");
+            System.out.println("4. Exit");
+
+            System.out.print("Enter Choice: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter Student Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter Register Number: ");
+                    String regNo = sc.nextLine();
+
+                    System.out.print("Enter Department: ");
+                    String dept = sc.nextLine();
+
+                    System.out.print("Enter Event Name: ");
+                    String event = sc.nextLine();
+
+                    String details = name + " | " + regNo
+                            + " | " + dept + " | " + event;
+
+                    registrations.add(details);
+
+                    System.out.println("Registration Successful!");
+                    break;
+
+                case 2:
+                    System.out.println("\nRegistered Students:");
+
+                    if (registrations.isEmpty()) {
+                        System.out.println("No Registrations Found");
+                    } else {
+                        for (String student : registrations) {
+                            System.out.println(student);
+                        }
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Enter Register Number: ");
+                    String search = sc.nextLine();
+
+                    boolean found = false;
+
+                    for (String student : registrations) {
+                        if (student.contains(" | " + search + " | ")) {
+                            System.out.println("Student Found:");
+                            System.out.println(student);
+                            found = true;
+                        }
+                    }
+
+                    if (!found) {
+                        System.out.println("Student Not Found");
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Thank You!");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice");
+            }
+
+        } while (choice != 4);
+
+        sc.close();
+    }
+}
