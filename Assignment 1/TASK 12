@@ -1,0 +1,114 @@
+
+interface Pass {
+    boolean isValid();
+}
+
+class OneDayPass implements Pass {
+    public boolean isValid() {
+        return true;
+    }
+}
+
+abstract class Vehicle {
+    String regNo;
+
+    Vehicle(String regNo) {
+        this.regNo = regNo;
+    }
+
+    abstract double calculateFee(int hours, int entryHour);
+}
+
+class Car extends Vehicle {
+    Car(String regNo) {
+        super(regNo);
+    }
+
+    double calculateFee(int hours, int entryHour) {
+        return hours * 30.0;
+    }
+}
+
+class EBike extends Vehicle {
+    EBike(String regNo) {
+        super(regNo);
+    }
+
+    double calculateFee(int hours, int entryHour) {
+        return 20.0;
+    }
+}
+
+class DeliveryVan extends Vehicle {
+    DeliveryVan(String regNo) {
+        super(regNo);
+    }
+
+    double calculateFee(int hours, int entryHour) {
+        if (entryHour >= 9 && entryHour < 17) {
+            return hours * 60.0;
+        }
+        return hours * 30.0;
+    }
+}
+
+class ParkingFacility {
+    boolean[][] slots = {
+        new boolean[3],
+        new boolean[4],
+        new boolean[5],
+        new boolean[6],
+        new boolean[7]
+    };
+
+    void park(Vehicle vehicle, int hours, int entryHour, Pass pass) {
+
+        for (int f = 0; f < slots.length; f++) {
+            for (int s = 0; s < slots[f].length; s++) {
+
+                if (!slots[f][s]) {
+                    slots[f][s] = true;
+
+                    double fee;
+
+                    if (pass != null && pass.isValid()) {
+                        fee = 0;
+                    } else {
+                        fee = vehicle.calculateFee(hours, entryHour);
+                    }
+
+                    System.out.println("Vehicle: " + vehicle.regNo);
+                    System.out.println("Floor: " + (f + 1));
+                    System.out.println("Slot: " + (s + 1));
+                    System.out.println("Parking Fee: Rs " + fee);
+                    System.out.println("--------------------");
+
+                    return;
+                }
+            }
+        }
+
+        System.out.println("Parking Full");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        ParkingFacility parking = new ParkingFacility();
+
+        Vehicle car = new Car("AP01AB1234");
+        Vehicle bike = new EBike("AP02CD5678");
+        Vehicle van = new DeliveryVan("AP03EF9012");
+
+        parking.park(car, 2, 10, null);
+        parking.park(bike, 3, 11, null);
+        parking.park(van, 2, 10, null);
+
+        Pass visitorPass = new OneDayPass();
+
+        Vehicle visitor = new Car("AP04GH3456");
+
+        parking.park(visitor, 5, 12, visitorPass);
+    }
+}
