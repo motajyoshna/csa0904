@@ -1,0 +1,54 @@
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+        try {
+            createFile("store1.txt", "Sales from Store 1\n");
+            createFile("store2.txt", "Sales from Store 2\n");
+
+            try (
+                BufferedReader r1 = new BufferedReader(
+                    new FileReader("store1.txt"));
+                BufferedReader r2 = new BufferedReader(
+                    new FileReader("store2.txt"));
+                BufferedWriter writer = new BufferedWriter(
+                    new FileWriter("summary.txt"))
+            ) {
+                String line;
+
+                while ((line = r1.readLine()) != null) {
+                    writer.write(line);
+                    writer.newLine();
+                }
+
+                while ((line = r2.readLine()) != null) {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
+
+            System.out.println("Report generated successfully");
+
+            BufferedReader result = new BufferedReader(
+                new FileReader("summary.txt"));
+
+            String line;
+            while ((line = result.readLine()) != null) {
+                System.out.println(line);
+            }
+            result.close();
+
+        } catch (IOException e) {
+            System.out.println("File error: " + e.getMessage());
+        }
+    }
+
+    static void createFile(String name, String content)
+            throws IOException {
+        try (BufferedWriter writer =
+                 new BufferedWriter(new FileWriter(name))) {
+            writer.write(content);
+        }
+    }
+}
