@@ -1,0 +1,84 @@
+
+import java.util.Scanner;
+
+public class Main {
+
+    static Scanner sc = new Scanner(System.in);
+
+    static void convert() {
+        System.out.print("Enter amount in USD: ");
+        double usd = sc.nextDouble();
+
+        double inr = usd * 88.50;
+
+        System.out.println("Converted Amount: Rs. " + inr);
+    }
+
+    // 1. Separate method
+    static void methodHandling() {
+        System.out.println("\n1. Method Handling");
+        convert();
+    }
+
+    // 2. Lambda style
+    static void lambdaHandling() {
+        System.out.println("\n2. Lambda Handling");
+
+        Runnable action = () -> convert();
+        action.run();
+    }
+
+    // 3. Anonymous class style
+    static void anonymousHandling() {
+        System.out.println("\n3. Anonymous Class Handling");
+
+        Runnable action = new Runnable() {
+            public void run() {
+                convert();
+            }
+        };
+
+        action.run();
+    }
+
+    // 4. Direct handling
+    static void directHandling() {
+        System.out.println("\n4. Direct Handling");
+        convert();
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("===== CURRENCY CONVERTER =====");
+        System.out.println("1. Method Handling");
+        System.out.println("2. Lambda Handling");
+        System.out.println("3. Anonymous Class Handling");
+        System.out.println("4. Direct Handling");
+
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                methodHandling();
+                break;
+
+            case 2:
+                lambdaHandling();
+                break;
+
+            case 3:
+                anonymousHandling();
+                break;
+
+            case 4:
+                directHandling();
+                break;
+
+            default:
+                System.out.println("Invalid Choice");
+        }
+
+        sc.close();
+    }
+}
