@@ -1,0 +1,119 @@
+import java.awt.*;
+import java.awt.event.*;
+
+public class Main extends Frame {
+
+    TextField regNo = new TextField(15);
+    TextField amount = new TextField(15);
+
+    Button pay = new Button("Pay");
+    Button clear = new Button("Clear");
+    Button receipt = new Button("Receipt");
+
+    Label status = new Label("Enter payment details");
+
+    FeeService service = new FeeService();
+    String lastReceipt = "";
+
+    Main() {
+        setTitle("Student Fee Payment");
+        setLayout(new GridLayout(5, 2, 10, 10));
+
+        add(new Label("Register Number:"));
+        add(regNo);
+
+        add(new Label("Amount:"));
+        add(amount);
+
+        add(pay);
+        add(clear);
+
+        add(receipt);
+        add(status);
+
+        pay.addActionListener(e -> makePayment());
+        clear.addActionListener(e -> clearFields());
+        receipt.addActionListener(e -> showReceipt());
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                dispose();
+            }
+        });
+
+        setSize(450, 250);
+        setVisible(true);
+    }
+
+    void makePayment() {
+        try {
+            String id = regNo.getText();
+            double value = Double.parseDouble(amount.getText());
+
+            lastReceipt = service.pay(id, value);
+
+            status.setText("Payment successful");
+            showMessage(lastReceipt);
+
+        } catch (Exception e) {
+            status.setText("Payment failed");
+            showMessage(e.getMessage());
+        }
+    }
+
+    void clearFields() {
+        regNo.setText("");
+        amount.setText("");
+        status.setText("Fields cleared");
+    }
+
+    void showReceipt() {
+        if (lastReceipt.isEmpty()) {
+            showMessage("No receipt available");
+        } else {
+            showMessage(lastReceipt);
+        }
+    }
+
+    void showMessage(String message) {
+        new DialogMessage(this, message);
+    }
+
+    public static void main(String[] args) {
+        new Main();
+    }
+
+    static class FeeService {
+        String pay(String regNo, double amount) {
+            if (regNo == null || regNo.trim().isEmpty()) {
+                throw new IllegalArgumentException(
+                    "Register number is required");
+            }
+
+            if (amount <= 0) {
+                throw new IllegalArgumentException(
+                    "Amount must be greater than zero");
+            }
+
+            return "Payment successful\nRegister Number: "
+                + regNo + "\nAmount: Rs. " + amount;
+        }
+    }
+
+    static class DialogMessage extends Dialog {
+        DialogMessage(Frame owner, String message) {
+            super(owner, "Message", true);
+            setLayout(new FlowLayout());
+
+            add(new Label(message));
+
+            Button ok = new Button("OK");
+            add(ok);
+
+            ok.addActionListener(e -> dispose());
+
+            setSize(300, 150);
+            setVisible(true);
+        }
+    }
+}
