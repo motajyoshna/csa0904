@@ -1,0 +1,83 @@
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String[] departments = {
+            "Cardiology", "Neurology", "Orthopedics"
+        };
+
+        String[][] doctors = {
+            {"Dr. Ravi", "Dr. Kumar"},
+            {"Dr. Priya", "Dr. Anil"},
+            {"Dr. Suresh", "Dr. Manoj"}
+        };
+
+        System.out.println("HOSPITAL APPOINTMENT DESK");
+
+        System.out.print("Enter Patient Name: ");
+        String patient = sc.nextLine();
+
+        System.out.println("\nSelect Department:");
+
+        for (int i = 0; i < departments.length; i++) {
+            System.out.println((i + 1) + ". " + departments[i]);
+        }
+
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+
+        if (choice < 1 || choice > departments.length) {
+            System.out.println("Invalid Department");
+            sc.close();
+            return;
+        }
+
+        System.out.println("\nAvailable Doctors:");
+
+        for (int i = 0; i < doctors[choice - 1].length; i++) {
+            System.out.println((i + 1) + ". " +
+                               doctors[choice - 1][i]);
+        }
+
+        System.out.print("Select Doctor: ");
+        int doctorChoice = sc.nextInt();
+
+        if (doctorChoice < 1 ||
+            doctorChoice > doctors[choice - 1].length) {
+            System.out.println("Invalid Doctor");
+            sc.close();
+            return;
+        }
+
+        System.out.println("\nSelect Time Slot:");
+        System.out.println("1. 10:00 AM");
+        System.out.println("2. 11:00 AM");
+        System.out.println("3. 02:00 PM");
+
+        System.out.print("Enter choice: ");
+        int timeChoice = sc.nextInt();
+
+        String[] slots = {
+            "10:00 AM", "11:00 AM", "02:00 PM"
+        };
+
+        if (timeChoice < 1 || timeChoice > 3) {
+            System.out.println("Invalid Time Slot");
+        } else {
+            System.out.println("\nAPPOINTMENT CONFIRMED");
+            System.out.println("Patient: " + patient);
+            System.out.println("Department: " +
+                               departments[choice - 1]);
+            System.out.println("Doctor: " +
+                               doctors[choice - 1][doctorChoice - 1]);
+            System.out.println("Time: " + slots[timeChoice - 1]);
+        }
+
+        sc.close();
+    }
+}
